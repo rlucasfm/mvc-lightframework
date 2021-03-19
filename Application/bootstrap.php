@@ -1,5 +1,6 @@
 <?php
 
+// Configura o Autoloader para as classes
 spl_autoload_register(function ($filename) {
     $file = '..' . DIRECTORY_SEPARATOR . $filename . '.php';
     if ( DIRECTORY_SEPARATOR === '/' ):
