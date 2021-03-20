@@ -11,4 +11,9 @@ class Home extends Controller
     {
         $this->view('home/index', ['title' => 'Página MVC']);
     }
+
+    public function soma($int)
+    {
+        echo "$int + 2 = ".strval($int+2);
+    }
 }

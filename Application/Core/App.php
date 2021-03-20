@@ -19,11 +19,30 @@ class App
     // Método construtor
     public function __construct()
     {
-        $URL_ARRAY = $this->parseUrl();
-        // echo($URL_ARRAY);
-        $this->getControllerFromUrl($URL_ARRAY);
-        $this->getMethodFromUrl($URL_ARRAY);
-        $this->getParamsFromUrl($URL_ARRAY);
+        $router = new \Application\Config\Routes();
+
+        $URL_ARRAY = $this->parseUrl();             
+        $ROUTE_STR = array_pop($URL_ARRAY);
+
+        if( $rt = $router->mapRoute($ROUTE_STR) )
+        {
+            $this->routeController($rt['uri']);                        
+        } else {
+            $this->routeController($URL_ARRAY); 
+        }
+        
+    }
+    /**
+    * Encapsula as funções de roteamento de controller genérico
+    *
+    * @param array
+    * @return void
+    */
+    public function routeController($URL_ARR)
+    {                   
+        $this->getControllerFromUrl($URL_ARR);
+        $this->getMethodFromUrl($URL_ARR);
+        $this->getParamsFromUrl($URL_ARR);
 
         if($this->page404)
         {
@@ -31,7 +50,7 @@ class App
         } else {
             // Chama um método de uma classe passando os parâmetros
             call_user_func_array([$this->controller, $this->method], $this->params);
-        }        
+        }  
     }
 
     /**
@@ -49,6 +68,7 @@ class App
         }
         
         // $REQUEST_URI = explode('/', substr(filter_input(INPUT_SERVER, 'REQUEST_URI'), 1));
+        $REQUEST_URI[] = $_GET['url'];
         return $REQUEST_URI;
     }
 
