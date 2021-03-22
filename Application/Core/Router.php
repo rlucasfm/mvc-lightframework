@@ -53,9 +53,9 @@ namespace Application\Core;
     {
         foreach( $this->routes as $route )
         {
-            if( $route['uri'] == $uri )
+            if( $route['uri'] == trim($uri, '/') )
             {
-                $response['uri'] = explode('::', $route['controller']);
+                $response['uri'] = $route['controller'];
                 return $response;
             }
         }

@@ -7,6 +7,6 @@
     <title><?php echo $data['title']; ?></title>
 </head>
 <body>
-    Página teste
+    Página HOME
 </body>
 </html>

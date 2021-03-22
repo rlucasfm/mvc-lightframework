@@ -47,6 +47,7 @@ class App
         if($this->page404)
         {
             require '../Application/Views/error_pages/error404.php';
+            // var_dump($URL_ARR);            
         } else {
             // Chama um método de uma classe passando os parâmetros
             call_user_func_array([$this->controller, $this->method], $this->params);
@@ -68,7 +69,7 @@ class App
         }
         
         // $REQUEST_URI = explode('/', substr(filter_input(INPUT_SERVER, 'REQUEST_URI'), 1));
-        $REQUEST_URI[] = $_GET['url'];
+        $REQUEST_URI[] = $_GET['url'] ?? '';
         return $REQUEST_URI;
     }
 
@@ -82,7 +83,7 @@ class App
     private function getControllerFromUrl($url)
     {
         if ( !empty($url[0]) && isset($url[0]) ) {
-            if ( file_exists('../Application/Controllers/' . ucfirst($url[0])  . '.php') ) 
+            if ( file_exists('../Application/Controllers/' . ucfirst($url[0]) . '.php') ) 
             {
                 $this->controller = ucfirst($url[0]);
             } else {
